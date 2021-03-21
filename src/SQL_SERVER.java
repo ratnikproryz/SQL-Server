@@ -36,7 +36,7 @@ public class SQL_SERVER extends JFrame implements TreeSelectionListener{
 	static DAO dao2;
 	Connection connection;
 	private Vector vData= new Vector();
-	private Vector vTitle= new Vector();
+	private Vector vTitle=new Vector();
 	
 	public SQL_SERVER(DAO temp) {
 		dao2=temp;
@@ -78,20 +78,14 @@ public class SQL_SERVER extends JFrame implements TreeSelectionListener{
 		// gắn hành động vào tree
 		treeEplorer.getSelectionModel().addTreeSelectionListener((TreeSelectionListener) this);
 		
-//		contentPane.add(treeEplorer);
-		
 		JScrollPane scrollPane = new JScrollPane(treeEplorer);
 		scrollPane.setBounds(15, 35, 160, 406);
 		contentPane.add(scrollPane);
 		
-//		defaultTable= new DefaultTableModel(vData, vTitle);
-//		jtable = new JTable(defaultTable);
-//		scrollTable= new JScrollPane(jtable);
-//		scrollTable.setBounds(181, 36, 658, 406);
-//		contentPane.add(scrollTable);
-		
+		scrollTable= new JScrollPane(new JTable(vData,vTitle));
 	}
 	public void getDBName(DAO temp) {
+		
 		dao2=temp;
 		connection = dao2.DAOC(null);
 		DatabaseMetaData metaData;
@@ -140,10 +134,8 @@ public class SQL_SERVER extends JFrame implements TreeSelectionListener{
 				}
 				vData.add(row);
 			}
-//			defaultTable.fireTableDataChanged();
-			defaultTable= new DefaultTableModel(vData, vTitle);
-			jtable = new JTable(defaultTable);
-			scrollTable= new JScrollPane(jtable);
+			jtable= new JTable(vData, vTitle);
+			scrollTable.setViewportView(jtable);
 			scrollTable.setBounds(181, 36, 658, 406);
 			contentPane.add(scrollTable);
 			resultSet.close();
