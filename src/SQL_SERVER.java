@@ -37,6 +37,7 @@ public class SQL_SERVER extends JFrame implements TreeSelectionListener{
 	Connection connection;
 	private Vector vData= new Vector();
 	private Vector vTitle=new Vector();
+	String tempDB= null, tempTable=null;
 	
 	public SQL_SERVER(DAO temp) {
 		dao2=temp;
@@ -104,11 +105,22 @@ public class SQL_SERVER extends JFrame implements TreeSelectionListener{
 	@Override
 	public void valueChanged(TreeSelectionEvent arg0) {
 		// TODO Auto-generated method stub	
+		
 		String dbName=arg0.getPath().getPathComponent(1).toString();
 		String table= arg0.getPath().getLastPathComponent().toString();
-		connection=dao2.DAOC(dbName);
-		reload(table);
-//		defaultTable.fireTableDataChanged();
+//		ở cây thư mục, nếu chỉ chọn vào csdl thôi thì sẽ báo lỗi do không có table để lấy dữ liệu
+//		câu lệnh dưới nhằm để khi bấm thu nhỏ cây thực chứa csdl và các table không bị lỗi do thiếu tên của table
+		if((dbName.equals(tempDB)==false && table.equals(dbName)==false)||( table.equals(tempTable)==false && table.equals(dbName)==false)) {
+			connection=dao2.DAOC(dbName);
+			reload(table);
+			tempDB=dbName;
+			tempTable=table;		
+		}
+		//cách cũ
+//		String dbName=arg0.getPath().getPathComponent(1).toString();
+//		String table= arg0.getPath().getLastPathComponent().toString();
+//		connection=dao2.DAOC(dbName);
+//		reload(table);
 	}
 	public void reload(String tableName) {
 		try {

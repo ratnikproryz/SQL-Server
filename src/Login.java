@@ -171,10 +171,8 @@ public class Login extends JFrame implements ActionListener{
 		if(e.getActionCommand().equals("Connect")) {
 			setUser(tfLogin.getText());
 			setPass(String.valueOf(pfPassword.getPassword()));
-//			setDatabaseName(tfSchema.getText());
 			DAO db= new DAO(Login.this);
 			db.DAOC(Login.this.databaseName);
-//			getDBName dbName= new getDBName(db);
 			SQL_SERVER sql= new SQL_SERVER(db);
 			
 		}
